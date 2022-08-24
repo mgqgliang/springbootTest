@@ -99,6 +99,7 @@ public class HttpUtils {
             log.info(buffer.toString());
             reader.close();
             T t = JSONObject.parseObject(buffer.toString(),clazz);
+            System.out.println(t);
             return t;
         } catch (IOException e) {
             e.printStackTrace();
