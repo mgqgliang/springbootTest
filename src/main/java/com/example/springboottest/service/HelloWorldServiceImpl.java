@@ -71,4 +71,9 @@ public class HelloWorldServiceImpl implements HelloWorldService{
             throw new FailResultException(CommonCode.CODE_50001,CommonMessage.ERROR_MESSAGE);
         }
     }
+
+    @Override
+    public String sayHi() {
+        return "Hi gays";
+    }
 }

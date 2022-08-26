@@ -29,9 +29,9 @@ public class HelloWorldController {
         CommonResult<String> result;
         try{
             String s = helloWorldService.helloWorld();
-            result = new CommonResult<String>(SuccessOrFail.SUCCESS.result,CommonCode.CODE_40001, CommonMessage.SUCCESS_MESSAGE,s);
+            result = new CommonResult<>(SuccessOrFail.SUCCESS.result,CommonCode.CODE_40001, CommonMessage.SUCCESS_MESSAGE,s);
         } catch(FailResultException e){
-            result = new CommonResult<String>(SuccessOrFail.FAIL.result,e.getCode(),e.getMessages());
+            result = new CommonResult<>(SuccessOrFail.FAIL.result,e.getCode(),e.getMessages());
         }
         return result;
     }
@@ -39,16 +39,16 @@ public class HelloWorldController {
     @GetMapping("/delaySpring")
     public CommonResult<String> delaySpring(){
         String message = "HelloWorld";
-        Integer code = 1;
+        int code = 1;
         Object[] objs = new Object[]{message,code};
-        CommonDelay springDelay = new CommonDelay(1,"helloWorldServiceImpl","testDelay",objs,null);
+        CommonDelay<Boolean> springDelay = new CommonDelay<>(1,"helloWorldServiceImpl","testDelay",objs,null);
         Delay.queue.add(springDelay);
         return new CommonResult<String>(SuccessOrFail.FAIL.result,CommonCode.CODE_40001,CommonMessage.SUCCESS_MESSAGE);
     }
     @GetMapping("/delaySpring2")
     public CommonResult<String> delaySpring2(){
         Object[] objs = new Object[]{};
-        CommonDelay springDelay = new CommonDelay(1,"helloWorldServiceImpl","getProjectFileList",objs,null);
+        CommonDelay<Boolean> springDelay = new CommonDelay<>(1,"helloWorldServiceImpl","getProjectFileList",objs,null);
         Delay.queue.add(springDelay);
         return new CommonResult<String>(SuccessOrFail.FAIL.result,CommonCode.CODE_40001,CommonMessage.SUCCESS_MESSAGE);
     }
@@ -57,7 +57,7 @@ public class HelloWorldController {
     public CommonResult<String> delayCommon(){
         String message = "HelloWorld";
         Object[] objs = new Object[]{message};
-        CommonDelay commonDelay = new CommonDelay<SelectUtil>(1,null,"testUtils",objs,new SelectUtil());
+        CommonDelay<SelectUtil> commonDelay = new CommonDelay<SelectUtil>(1,null,"testUtils",objs,new SelectUtil());
         Delay.queue.add(commonDelay);
         return new CommonResult<String>(SuccessOrFail.SUCCESS.result,CommonCode.CODE_40001,CommonMessage.SUCCESS_MESSAGE);
     }
@@ -67,7 +67,7 @@ public class HelloWorldController {
         Object[] objs = new Object[]{};
         //java.lang.NoSuchMethodException: com.example.springboottest.util.SelectUtil.getProjectFileList()
         //因为getProjectFileList方法使用Spring自动装配，所以报错
-        CommonDelay commonDelay = new CommonDelay(1,null,"getProjectFileList",objs,new SelectUtil());
+        CommonDelay<SelectUtil> commonDelay = new CommonDelay<SelectUtil>(1,null,"getProjectFileList",objs,new SelectUtil());
         Delay.queue.add(commonDelay);
         return new CommonResult(SuccessOrFail.FAIL.result,CommonCode.CODE_40001,CommonMessage.SUCCESS_MESSAGE);
     }

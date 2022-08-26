@@ -15,4 +15,7 @@ public interface HelloWorldService {
     Boolean testDelay(String message,Integer code);
 
     List<ProjectFileEntity> getProjectFileList() throws FailResultException;
+
+    String sayHi();
+
 }
