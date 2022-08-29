@@ -76,4 +76,9 @@ public class HelloWorldServiceImpl implements HelloWorldService{
     public String sayHi() {
         return "Hi gays";
     }
+
+	@Override
+	public String hiGays() {
+		return "大家好";
+	}
 }

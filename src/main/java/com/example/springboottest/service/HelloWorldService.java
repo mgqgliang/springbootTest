@@ -18,4 +18,5 @@ public interface HelloWorldService {
 
     String sayHi();
 
+    String hiGays();
 }
