@@ -81,4 +81,10 @@ public class HelloWorldServiceImpl implements HelloWorldService{
 	public String hiGays() {
 		return "大家好";
 	}
+
+    @Override
+    public String sayWhat() {
+        return "你让我说啥？";
+    }
+
 }
