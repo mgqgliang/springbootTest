@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class FailResultException extends Exception{
-    public FailResultException(){};
+
 
     public FailResultException(CommonCode code, CommonMessage message){
         this.code = code.value;
