@@ -28,6 +28,12 @@ public class FailResultException extends Exception{
      * 返回信息
      */
     private String messages;
-
-
+    /**
+     * 错误次数
+     */
+    private Integer failTimes;
+    /**
+     * 做大错误次数 默认为5
+     */
+    private Integer maxFailTimes = 5;
 }
