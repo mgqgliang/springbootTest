@@ -3,6 +3,7 @@ package com.example.springboottest.common.delay;
 import com.example.springboottest.common.commonstatic.CommonCode;
 import com.example.springboottest.common.commonstatic.CommonMessage;
 import com.example.springboottest.common.FailResultException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -12,12 +13,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.lang.reflect.Method;
+import java.util.Calendar;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
+@Slf4j
 public class TimeTask  implements ApplicationListener<ContextRefreshedEvent>, ApplicationContextAware {
 
     /**
@@ -90,10 +93,15 @@ public class TimeTask  implements ApplicationListener<ContextRefreshedEvent>, Ap
                             System.out.println();
                             invokeMethod(owner,classes,methodName,args);
                         }catch (Exception e){
-                            System.out.println("==============方法执行失败==============" );
-                            e.printStackTrace();
                             CommonDelay common = new CommonDelay(take.getTimes(),take.getClassName(),take.getMethodName(),take.getArgs(),take.getT());
-                            Delay.queue.offer(common);
+                            int fileTimes = common.getFailTimes() + 1;
+                            if(fileTimes >= common.getMaxFailTimes()){
+                                log.error("延迟任务操作失败");
+                                //TODO 记录错误操作日志
+                            }else{
+                                common.setFailTimes(fileTimes);
+                                Delay.queue.offer(common);
+                            }
                         }
                     }
                 }

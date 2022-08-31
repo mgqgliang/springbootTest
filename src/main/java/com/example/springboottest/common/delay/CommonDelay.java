@@ -27,7 +27,7 @@ public class CommonDelay<T> implements Delayed {
      */
     public CommonDelay(int times,String className,String methodName,Object[] args,T t){
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND,times);
+        cal.add(Calendar.MINUTE,times);
         this.times = times;
         this.expirationTime = cal.getTime();
         this.className = className;
@@ -56,6 +56,14 @@ public class CommonDelay<T> implements Delayed {
      * 延迟调用方法名称
      */
     private String methodName;
+    /**
+     * 错误次数
+     */
+    private int failTimes;
+    /**
+     * 最大错误次数
+     */
+    private int maxFailTimes = 5;
     /**
      * 延迟方法所在的类
      */
