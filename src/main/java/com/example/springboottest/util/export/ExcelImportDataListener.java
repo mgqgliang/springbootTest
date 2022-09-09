@@ -2,12 +2,10 @@ package com.example.springboottest.util.export;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class ExcelImportDataListener<T> implements ReadListener<T> {
 
     /**
