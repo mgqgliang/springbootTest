@@ -28,4 +28,6 @@ public class FailResultException extends Exception{
      * 返回信息
      */
     private String messages;
+
+
 }
