@@ -106,8 +106,7 @@ class SpringbootTestApplicationTests {
         log.info("================执行时间：" + stopWatch.getTotalTimeMillis() + "==============");
     }
 
-    @Ignore
-    @Test
+//        @Test
     void testExport() throws FailResultException {
         LocalDateTime localDateTime = LocalDateTime.now();
         Student student = new Student();
@@ -135,43 +134,17 @@ class SpringbootTestApplicationTests {
 
     @Test
     void testImportExcel() {
-        try{
-
-        String fileName = "D:\\export\\导出信息测试1662628666971.xlsx";
-        ExcelImportDataListener<Student> studentOneListener = new ExcelImportDataListener();
-        ExcelReader studentOneReader = EasyExcel.read(fileName, studentOneListener).build();
-
-        //第一页表单
-        ReadSheet sheetOne = EasyExcel.readSheet(0).head(Student.class).registerReadListener(new ExcelImportDataListener<Student>()).build();
-        studentOneReader.read(sheetOne);
-        List<Student> studentOneList = studentOneListener.getList();
-        studentOneReader.finish();
-        System.out.println(studentOneList.size() + "用户名：" + studentOneList.get(0).getName());
-        ExcelImportDataListener<Teacher> teacherOneListener = new ExcelImportDataListener();
-        ExcelReader teacherOneReader = EasyExcel.read(fileName, teacherOneListener).build();
-        //第二页表单
-        ReadSheet sheetTwo = EasyExcel.readSheet(1).head(Teacher.class).registerReadListener(new ExcelImportDataListener<Teacher>()).build();
-        teacherOneReader.read(sheetTwo);
-        List<Teacher> teacherOneList = teacherOneListener.getList();
-        teacherOneReader.finish();
-        System.out.println(teacherOneList.size() + "用户名：" + teacherOneList.get(0).getName());
-        //第三页表单
-        ExcelImportDataListener<Student> studentTwoListener = new ExcelImportDataListener();
-        ExcelReader studentTwoReader = EasyExcel.read(fileName, studentTwoListener).build();
-        ReadSheet sheetThree = EasyExcel.readSheet(2).head(Student.class).registerReadListener(new ExcelImportDataListener<Student>()).build();
-        studentTwoReader.read(sheetThree);
-        List<Student> studentTwoList = studentTwoListener.getList();
-        studentTwoReader.finish();
-        System.out.println(studentTwoList.size() + "用户名：" + studentTwoList.get(0).getName());
-        //第四页表单
-        ExcelImportDataListener<Teacher> teacherTwoListener = new ExcelImportDataListener();
-        ExcelReader teacherTwoReader = EasyExcel.read(fileName, teacherTwoListener).build();
-        ReadSheet sheetFour = EasyExcel.readSheet(3).head(Teacher.class).registerReadListener(new ExcelImportDataListener<Teacher>()).build();
-        teacherTwoReader.read(sheetFour);
-        List<Teacher> teacherTwoList = teacherTwoListener.getList();
-        teacherTwoReader.finish();
-        System.out.println(teacherTwoList.size() + "用户名：" + teacherTwoList.get(0).getName());
-        } catch (ExcelDataConvertException e){
+        try {
+            String fileName = "D:\\export\\导出信息测试1662715068088.xlsx";
+            List<Student> studentOneList = new ExcelUtils<Student>().importExcel(fileName, Student.class, 0);
+            System.out.println(studentOneList.size() + "用户名：" + studentOneList.get(0).getName());
+            List<Teacher> teacherOneList = new ExcelUtils<Teacher>().importExcel(fileName, Teacher.class, 1);
+            System.out.println(teacherOneList.size() + "用户名：" + teacherOneList.get(0).getName());
+            List<Student> studentTwoList = new ExcelUtils<Student>().importExcel(fileName, Student.class, 2);
+            System.out.println(studentTwoList.size() + "用户名：" + studentTwoList.get(0).getName());
+            List<Teacher> teacherTwoList = new ExcelUtils<Teacher>().importExcel(fileName, Teacher.class, 3);
+            System.out.println(teacherTwoList.size() + "用户名：" + teacherTwoList.get(0).getName());
+        } catch (ExcelDataConvertException e) {
             System.out.println("导入数据错误");
         }
     }
